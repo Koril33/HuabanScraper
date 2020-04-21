@@ -63,3 +63,13 @@ cmd就会报错。改成如下格式即可：
 python huaban_by_requests.py --url 'https://huaban.com/boards/3114850/?k99otknb&max=2857420870&limit=20&wfl=1'
 ```
 
+---
+
+### exe方式
+
+源文件已经打包成了exe格式，位于dist目录下。格式和上面一样，打开cmd，进入存放exe文件的目录下，输入命令：
+
+```
+huaban_command.exe --url https://huaban.com/explore/piqiaqiubizhi/ --max 50 --path 皮卡丘壁纸
+```
+

@@ -15,3 +15,7 @@ test.py
 
 # cache
 __pycache__
+
+# pyinstaller
+build
+*.spec
