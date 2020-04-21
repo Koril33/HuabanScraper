@@ -6,3 +6,9 @@
 
 # setting.json
 .vscode
+
+# test
+test.py
+
+# json
+*.json
