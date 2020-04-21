@@ -41,7 +41,7 @@
 python huaban_by_requests.py --url 'https://huaban.com/discovery/beauty/' --max '30' --path '测试'
 ```
 
-上面这行命令，就是从“https://huaban.com/discovery/beauty/”这个网页上下载前30张图片，并保存到名为“测试”的文件夹下。
+上面这行命令，就是从指定的网页上下载前30张图片，并保存到名为“测试”的文件夹下。
 
 ---
 
