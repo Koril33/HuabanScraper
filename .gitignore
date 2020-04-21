@@ -12,3 +12,6 @@ test.py
 
 # json
 *.json
+
+# cache
+__pycache__
