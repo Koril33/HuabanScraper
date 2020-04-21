@@ -23,6 +23,12 @@
 
 ### 使用方法
 
+格式：
+
+```
+python huaban_by_requests.py --url [URL] --max [MAX_NUM] --path [FOLDER_NAME]
+```
+
 需要有三个参数
 
 1. `--url`，需要下载的url（必选参数），例如：
