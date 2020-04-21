@@ -38,7 +38,22 @@
 3. `--path`，文件夹名字（不指定此参数的话，默认名字为‘huaban_pictures’），用来新建一个文件夹，保存下载的图片。
 
 ```
-python huaban_by_requests.py --url https://huaban.com/discovery/beauty/ --max 30 --path 测试
+python huaban_by_requests.py --url 'https://huaban.com/discovery/beauty/' --max '30' --path '测试'
 ```
 
-上面这行命令，就是从“https://huaban.com/discovery/beauty/”这个网页上下载前30张图片，保存到名为“测试”的文件夹下。
+上面这行命令，就是从“https://huaban.com/discovery/beauty/”这个网页上下载前30张图片，并保存到名为“测试”的文件夹下。
+
+---
+
+## 注意
+
+最好将url参数用引号包裹起来，不然如果你的URL是这种：
+
+>https://huaban.com/boards/3114850/?k99otknb&max=2857420870&limit=20&wfl=1
+
+cmd就会报错。改成如下格式即可：
+
+```
+python huaban_by_requests.py --url 'https://huaban.com/boards/3114850/?k99otknb&max=2857420870&limit=20&wfl=1'
+```
+
