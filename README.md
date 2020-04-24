@@ -9,12 +9,9 @@
 
 ## 1. 原理
 
-requests+json的方式，直接解析json中图片的key值，获取图片下载地址，多线程下载，速度较快。
+requests+json的方式，直接解析json中图片的key值，拼接图片下载地址，收集到所有图片的地址以后，使用多线程下载，速度较快。
 
-* 我的本地环境：Windows10，python3.7
-* 额外需要下载的库：requests
-
-如果没有安装requests，使用命令：`pip install requests`。
+---
 
 ## 2. 使用方法
 
