@@ -72,6 +72,11 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
+        self.setWindowOpacity(0.9) # 设置窗口透明度
+        
+        # self.setWindowFlag(QtCore.Qt.FramelessWindowHint) # 隐藏边框
+        # self.setAttribute(QtCore.Qt.WA_TranslucentBackground) # 设置窗口背景透明
+
         # 添加按钮事件绑定
         self.Button1.clicked.connect(MainWindow.start_download)
         self.Button2.clicked.connect(MainWindow.find_path)

@@ -96,7 +96,6 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                                    "./")  # 起始路径
         self.lineEdit_path.setText(download_path)
 
-    # 判断用户输入
     def check_input(self, url, path_name):
         '''检查用户输入
         :param url: 用户填写的下载url
@@ -212,7 +211,15 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         '''作者信息
         '''
 
-        QMessageBox.about(self, "关于", "作者：Koril")
+        QMessageBox.about(self, '关于', '版本号：v1.1.0\n'
+                                        '--------------------------------------------------------------\n'
+                                        '作者：Koril\n'
+                                        '--------------------------------------------------------------\n'
+                                        '邮箱：dingjinghui33@163.com\n'
+                                        '--------------------------------------------------------------\n'
+                                        '项目地址：https://github.com/Koril33/HuabanScraper\n'
+                                        '--------------------------------------------------------------\n')
+                                        
 
     def open_huaban_web(self):
         '''打开外部网站
@@ -224,11 +231,21 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             webbrowser.open_new_tab('https://huaban.com')
 
 
+class CommonHelper:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def readQss(style):
+        with open(style, 'r') as f:
+            return f.read()
+
+
 if __name__ == '__main__':
     import sys
     app = QtWidgets.QApplication(sys.argv)
 
-    # 创建启动界面，支持png透明图片
+    # 创建启动界面
     splash = QtWidgets.QSplashScreen(QtGui.QPixmap('res\splash.png'))
     splash.show()
 
@@ -236,6 +253,12 @@ if __name__ == '__main__':
     # splash.showMessage('正在加载……')
 
     window = MyWindow()
+
+    # 加载qss文件
+    styleFile = './style/beautify.qss'
+    qssStyle = CommonHelper.readQss(styleFile)
+    window.setStyleSheet(qssStyle)
+
     window.show()
 
     # 关闭启动画面

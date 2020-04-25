@@ -1,0 +1,35 @@
+#Button1, #Button2, #Button3, #Button4 { 
+    background:#F76677;
+    border-radius:5px
+}
+
+#Button1:hover {
+    background:red;
+}
+
+#Button2:hover {
+    background:red;
+}
+
+#Button3:hover {
+    background:red;
+}
+
+#Button4:hover {
+    background:red;
+}
+
+QLineEdit {
+    border:1px solid gray;
+    width:300px;
+    border-radius:10px;
+    padding:2px 4px;
+}
+
+QProgressBar::chunk {
+    background-color: #F76677;
+}
+
+/* QWidget{
+    background-color: #181818;
+} */
