@@ -29,7 +29,7 @@ requests+json的方式，直接解析json中图片的key值，拼接图片下载
 >
 > XHR：https://huaban.com/boards/3114850/?k99otknb&max=2857420870&limit=20&wfl=1
 
-![](HuabanScrpaerGUI.PNG)
+![](res/HuabanScrpaerGUI.PNG)
 
 ---
 
