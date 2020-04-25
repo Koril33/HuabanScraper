@@ -17,9 +17,7 @@ requests+json的方式，直接解析json中图片的key值，拼接图片下载
 
 ### 2.1 图形界面
 
-在“GUI_exe”文件夹下，有直接用pyinstaller打包好的图形界面软件。
-
-支持以下几种url格式：
+在[releases](https://github.com/Koril33/HuabanScraper/releases)中下载软件，目前支持以下几种url格式：
 
 > 首页的发现：https://huaban.com/discovery/beauty/
 >
