@@ -17,7 +17,7 @@ requests+json的方式，直接解析json中图片的key值，拼接图片下载
 
 ### 2.1 图形界面
 
-在[releases](https://github.com/Koril33/HuabanScraper/releases)中下载软件，目前支持以下几种url格式：
+在releases中下载软件，目前支持以下几种url格式：
 
 > 首页的发现：https://huaban.com/discovery/beauty/
 >
@@ -33,12 +33,10 @@ requests+json的方式，直接解析json中图片的key值，拼接图片下载
 
 ### 2.2 命令行
 
-在“command_exe”文件夹下，有直接用pyinstaller打包好的命令行软件。
-
 格式：
 
 ```
-huaban_command.exe --url [URL] --max [MAX_NUM] --path [FOLDER_NAME]
+ScraperCmd.exe --url [URL] --max [MAX_NUM] --path [FOLDER_NAME]
 ```
 
 需要有三个参数：
@@ -50,7 +48,7 @@ huaban_command.exe --url [URL] --max [MAX_NUM] --path [FOLDER_NAME]
 3. `--path`，文件夹名字（不指定此参数的话，默认名字为‘huaban_pictures’），用来新建一个文件夹，保存下载的图片。
 
 ```
-huaban_command.exe --url https://huaban.com/explore/piqiaqiubizhi/ --max 50 --path 皮卡丘壁纸
+ScraperCmd.exe --url https://huaban.com/explore/piqiaqiubizhi/ --max 50 --path 皮卡丘壁纸
 ```
 
 上面这行命令，就是从指定的网页上下载前50张图片，并保存到名为“皮卡丘壁纸”的文件夹下。
