@@ -30,8 +30,8 @@ class ThreadDownload(QThread):
         :param index: 图片保存代号
         '''
 
-        scraper.download_image(single_url, self.path_name, index)
-        process = int(scraper.get_download_count() / int(self.pic_max) * 100)
+        scraper.download.download_image(single_url, self.path_name, index)
+        process = int(scraper.download.get_download_count() / int(self.pic_max) * 100)
         msg = f'{single_url} 下载成功！'
 
         # 发送信号：进度条的值
@@ -48,7 +48,7 @@ class ThreadDownload(QThread):
 
         # 将所有图片下载路径存入scraper对象的all_urls中
         scraper.run_without_download()
-
+        
         # 发送超过图片总数的信号
         # self.download_overtax_signal.emit(scraper.get_overtax_flag())
 
@@ -66,7 +66,7 @@ class ThreadDownload(QThread):
         self.download_time_signal.emit(consume_time)
 
         # 发送信号，成功下载数量
-        self.donwload_count_signal.emit(scraper.get_download_count())
+        self.donwload_count_signal.emit(scraper.download.get_download_count())
 
         # 发送信号：下载完成
         self.download_finish_signal.emit(True)

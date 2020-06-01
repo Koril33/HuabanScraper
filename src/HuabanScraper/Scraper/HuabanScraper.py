@@ -207,12 +207,6 @@ class Scraper:
 
         return self.__all_urls
 
-    def get_download_count(self):
-        '''getter __download_count
-        '''
-
-        return self.__download_count
-
     def get_overtax_flag(self):
         return self.__overtax
 
@@ -250,9 +244,9 @@ class Scraper:
 
 if __name__ == '__main__':
     urls_test = [
-        'https://huaban.com/discovery/geek/',
-        'https://huaban.com/boards/43427316/',
-        'https://huaban.com/pins/3083753516/',
+        # 'https://huaban.com/discovery/geek/',
+        # 'https://huaban.com/boards/43427316/',
+        # 'https://huaban.com/pins/3083753516/',
         'https://huaban.com/favorite/beauty/',
     ]
 
@@ -264,4 +258,6 @@ if __name__ == '__main__':
         scraper_list.append(scraper)
 
     for scraper in scraper_list:
-        scraper.run_and_download()
+        scraper.run_without_download()
+
+    print(scraper.get_all_urls())

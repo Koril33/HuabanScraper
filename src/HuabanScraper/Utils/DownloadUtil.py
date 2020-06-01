@@ -38,3 +38,9 @@ class DownloadPic:
                                 image_url, path_name, index)
 
         print(f'It spends {time.time() - start_time} seconds')
+
+    def get_download_count(self):
+        '''getter __download_count
+        '''
+
+        return self.__download_count
