@@ -5,6 +5,12 @@ import sys
 import concurrent.futures
 import time
 
+import sys
+import os
+o_path = os.getcwd()
+sys.path.append(o_path)
+import Utils.DownloadUtil as DownloadUtil
+import Utils.MakeDir as MakeDir
 
 class Scraper:
     def __init__(self, main_page, pic_max, path_name):
@@ -27,6 +33,9 @@ class Scraper:
         self.__download_count = 0
         # 指定下载数量是否超出图片总数
         self.__overtax = False
+
+        # 下载的对象
+        self.download = DownloadUtil.DownloadPic()
 
         # 构造请求头
         self.__my_header = {
@@ -64,7 +73,7 @@ class Scraper:
         :return: 返回标志
         """
 
-        tags = {'discovery', 'boards', 'pins', 'explore'}
+        tags = {'discovery', 'boards', 'pins', 'explore', 'favorite'}
         try:
             tag = url.split('/')[3]
             if tag in tags:
@@ -97,6 +106,8 @@ class Scraper:
         elif tag == 'boards':
             first_page_pins = first_page_json_result['board']['pins']
         elif tag == 'explore':
+            first_page_pins = first_page_json_result['pins']
+        elif tag == 'favorite':
             first_page_pins = first_page_json_result['pins']
         elif tag == 'pins':
             self.__all_urls.append(self.__pic_url_l
@@ -153,6 +164,8 @@ class Scraper:
                 pins = json_result['board']['pins']
             elif tag == 'explore':
                 pins = json_result['pins']
+            elif tag == 'favorite':
+                pins = json_result['pins']
             elif tag == 'pins':
                 self.__all_urls.append(self.__pic_url_l
                                        + json_result['pin']['file']['key'])
@@ -203,38 +216,6 @@ class Scraper:
     def get_overtax_flag(self):
         return self.__overtax
 
-    def download_image(self, img_url, path_name, img_name):
-        """下载单张图片
-        :param img_url: 下载图片的地址
-        :param path_name: 下载图片到指定的文件夹
-        :param img:
-        """
-
-        r = requests.get(img_url)
-
-        if not '/' in path_name:
-            path_name = './' + path_name
-
-        with open(f'{path_name}/{img_name}.png', 'wb') as image_file:
-            image_file.write(r.content)
-        self.__download_count += 1
-        print(
-            f'image_{img_name} is downloaded! count : {self.__download_count}')
-
-    def download_all_by_urls(self, img_urls, path_name):
-        """多线程下载
-        :param img_urls: 所有图片的下载地址
-        :param path_name: 下载图片到指定的文件夹
-        """
-        start_time = time.time()
-
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            for index, image_url in enumerate(img_urls):
-                executor.submit(self.download_image,
-                                image_url, path_name, index)
-
-        print(f'It spends {time.time() - start_time} seconds')
-
     def run_and_download(self):
         """获取所有url并下载
         """
@@ -247,10 +228,10 @@ class Scraper:
                                  tag=self.__tag)
 
         # 创建文件夹
-        self.make_download_dir(self.__path_name)
+        MakeDir.make_download_dir(self.__path_name)
 
         # 多线程下载
-        self.download_all_by_urls(self.__all_urls, self.__path_name)
+        self.download.download_all_by_urls(self.__all_urls, self.__path_name)
 
         # 打印图片总数
         print(f'total: {len(self.__all_urls)}')
@@ -267,22 +248,12 @@ class Scraper:
                                  tag=self.__tag)
 
 
-    def make_download_dir(self, path_name):
-        '''创建下载图片的文件夹
-        :param path: 文件夹名字
-        '''
-
-        if not os.path.exists(path_name):
-            os.mkdir(path_name)
-        else:
-            print(f'{path_name} exists!')
-
-
 if __name__ == '__main__':
     urls_test = [
         'https://huaban.com/discovery/geek/',
         'https://huaban.com/boards/43427316/',
         'https://huaban.com/pins/3083753516/',
+        'https://huaban.com/favorite/beauty/',
     ]
 
     scraper_list = []

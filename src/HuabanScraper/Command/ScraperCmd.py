@@ -1,7 +1,7 @@
 import sys
 import os
-#得到当前根目录
-o_path = os.getcwd() # 返回当前工作目录
+
+o_path = os.getcwd()
 sys.path.append(o_path)
 import Scraper.HuabanScraper as HuabanScraper
 import argparse
