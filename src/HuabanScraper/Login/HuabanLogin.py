@@ -1,0 +1,29 @@
+import requests
+
+# 通过Session类新建一个会话
+session = requests.Session()
+post_url = 'https://huaban.com/login'
+# 往下使用requests的地方，直接使用session即可，session就会保存服务器发送过来的cookie信息
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+    'Referer': 'https://passport.weibo.cn/signin/login?entry=mweibo&r=http%3A%2F%2Fweibo.cn%2F&backTitle=%CE%A2%B2%A9&vt=',
+    'Cookie': 'sid=s%3AiRs9ZPUuYQfEsRRME3ULW8AFqXagwlVf.bg%2Fsyr7mHLke%2BH2ur6eNEg3BFJfFUdadImnQZlJHugo; wft=1; _f=iVBORw0KGgoAAAANSUhEUgAAADIAAAAUCAYAAADPym6aAAACuUlEQVRYR%2B2WT0gUURzHP88gQkXpkAShFkKQGQQ6hRTMGBGR0S0PQlKQRIdYkyDr0MGLHoJcurUdysBDEUGURVQ7S0Hk6iFIiyDJhBALIYhFCvfFb3YW1nV3HHVWEprTg%2Fed976f378ZhdYar0cp5bm%2FSpt9M32ePpWAFCcSRNrbHUuhcJhwKOSs2yMREiUlniAaioEIcENBrFBcvkDkcjOW8hAzzXlrfGREww5AiIf%2FOZANs7O09ffTOjBgAaPAbeACMOFmoBUYkMQB1UAjcAWYAo4CiRw62S8DjqR1Cn74gV9SRmxLPKcey7aZrqhgrLbWkEhrOA68BypkX8pIpwwNAZuAcy6okWnMQ9cs5yn4EDhIdmnlAfkOPAL2Am%2Fd6AuIU1pumdUB0Ty6OgX30oFZTZAW9%2BLLwANATEpmpMSkVK66GUkbNN0IS%2Ba8dE6GAwXJnFqXenq429LC55oaunp7%2BVpVJVGX6D8F3gFPANsFGQTKgW7gFHAxo2%2BkxLJ10j%2F7gJPALdlX0BVoaeU9zMfU8mNkpRrfzf4fZKWh9vl%2BQTKiYyMH0HP9jge1rg2tr0OyXNbKrH%2BZ7U3bw6Oga0GNKathZz7vXrpsEPPbNsbLZpgs%2FZmysdx%2FLW0PdYParSzjmLbj553DLOPaQghH16wso17b8RHQj5W1R6bdvMc9L68uDVL5q5xDk9udd59VfgoCJH4CxRllGvt1dLiPIvUwZzZi8eck%2BaKajNM6Gr9JEVuVaRxcALKILjMjAtM4Vc2bzRMrBxEjOhZ%2FjeY%2BWlWrpoaOXCWj1wSIRFg5%2F1mDucrKhV0DGUn1yVmgU1nGnZwZSWkC6xG5owClJdMr2SEN7zVFs6eR0ytKH86ecl668K5XL9IQ0uylf9bzu2iO6JZxPm6cXv7U8jn%2BA5MV5DsSmLslHLQYyF%2BE5uEo80zUAQAAAABJRU5ErkJggg%3D%3D%2CWin32.1536.864.24; _uab_collina=159099106989001079047743; UM_distinctid=1726e752431cf-06650c25beea03-f7d1d38-144000-1726e7524327fa; _cnzz_CV1256903590=is-logon%7Clogged-out%7C1590991071260; CNZZDATA1256903590=429435058-1590987052-%7C1590987052; __asc=89c672b91726e7524afbea6066e; __auc=89c672b91726e7524afbea6066e; Hm_lvt_d4a0e7c3cd16eb58a65472f40e7ee543=1590991072; Hm_lpvt_d4a0e7c3cd16eb58a65472f40e7ee543=1590991072'
+
+}
+data = {
+    'email': '',
+    'password': '',
+    '_ref': 'loginPage'
+}
+
+r = session.post(url=post_url, data=data, headers=headers)
+
+# 上面的session会保存会话，往下发送请求，直接使用session即可
+url = 'https://huaban.com/home/'
+headers1 = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+    'Cookie': 'sid=s%3AiRs9ZPUuYQfEsRRME3ULW8AFqXagwlVf.bg%2Fsyr7mHLke%2BH2ur6eNEg3BFJfFUdadImnQZlJHugo; wft=1; _f=iVBORw0KGgoAAAANSUhEUgAAADIAAAAUCAYAAADPym6aAAACuUlEQVRYR%2B2WT0gUURzHP88gQkXpkAShFkKQGQQ6hRTMGBGR0S0PQlKQRIdYkyDr0MGLHoJcurUdysBDEUGURVQ7S0Hk6iFIiyDJhBALIYhFCvfFb3YW1nV3HHVWEprTg%2Fed976f378ZhdYar0cp5bm%2FSpt9M32ePpWAFCcSRNrbHUuhcJhwKOSs2yMREiUlniAaioEIcENBrFBcvkDkcjOW8hAzzXlrfGREww5AiIf%2FOZANs7O09ffTOjBgAaPAbeACMOFmoBUYkMQB1UAjcAWYAo4CiRw62S8DjqR1Cn74gV9SRmxLPKcey7aZrqhgrLbWkEhrOA68BypkX8pIpwwNAZuAcy6okWnMQ9cs5yn4EDhIdmnlAfkOPAL2Am%2Fd6AuIU1pumdUB0Ty6OgX30oFZTZAW9%2BLLwANATEpmpMSkVK66GUkbNN0IS%2Ba8dE6GAwXJnFqXenq429LC55oaunp7%2BVpVJVGX6D8F3gFPANsFGQTKgW7gFHAxo2%2BkxLJ10j%2F7gJPALdlX0BVoaeU9zMfU8mNkpRrfzf4fZKWh9vl%2BQTKiYyMH0HP9jge1rg2tr0OyXNbKrH%2BZ7U3bw6Oga0GNKathZz7vXrpsEPPbNsbLZpgs%2FZmysdx%2FLW0PdYParSzjmLbj553DLOPaQghH16wso17b8RHQj5W1R6bdvMc9L68uDVL5q5xDk9udd59VfgoCJH4CxRllGvt1dLiPIvUwZzZi8eck%2BaKajNM6Gr9JEVuVaRxcALKILjMjAtM4Vc2bzRMrBxEjOhZ%2FjeY%2BWlWrpoaOXCWj1wSIRFg5%2F1mDucrKhV0DGUn1yVmgU1nGnZwZSWkC6xG5owClJdMr2SEN7zVFs6eR0ytKH86ecl668K5XL9IQ0uylf9bzu2iO6JZxPm6cXv7U8jn%2BA5MV5DsSmLslHLQYyF%2BE5uEo80zUAQAAAABJRU5ErkJggg%3D%3D%2CWin32.1536.864.24; _uab_collina=159099106989001079047743; UM_distinctid=1726e752431cf-06650c25beea03-f7d1d38-144000-1726e7524327fa; _cnzz_CV1256903590=is-logon%7Clogged-out%7C1590991071260; CNZZDATA1256903590=429435058-1590987052-%7C1590987052; __asc=89c672b91726e7524afbea6066e; __auc=89c672b91726e7524afbea6066e; Hm_lvt_d4a0e7c3cd16eb58a65472f40e7ee543=1590991072; Hm_lpvt_d4a0e7c3cd16eb58a65472f40e7ee543=1590991072'
+
+}
+r = session.get(url=url, headers=headers1)
+print(r.text)

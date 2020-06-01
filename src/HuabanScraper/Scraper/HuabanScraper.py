@@ -64,7 +64,7 @@ class Scraper:
         :return: 返回标志
         """
 
-        tags = {'discovery', 'boards', 'pins'}
+        tags = {'discovery', 'boards', 'pins', 'explore'}
         try:
             tag = url.split('/')[3]
             if tag in tags:
@@ -96,6 +96,8 @@ class Scraper:
             first_page_pins = first_page_json_result['pins']
         elif tag == 'boards':
             first_page_pins = first_page_json_result['board']['pins']
+        elif tag == 'explore':
+            first_page_pins = first_page_json_result['pins']
         elif tag == 'pins':
             self.__all_urls.append(self.__pic_url_l
                                    + first_page_json_result['pin']['file']['key'])
@@ -149,6 +151,8 @@ class Scraper:
                 pins = json_result['pins']
             elif tag == 'boards':
                 pins = json_result['board']['pins']
+            elif tag == 'explore':
+                pins = json_result['pins']
             elif tag == 'pins':
                 self.__all_urls.append(self.__pic_url_l
                                        + json_result['pin']['file']['key'])
@@ -243,10 +247,7 @@ class Scraper:
                                  tag=self.__tag)
 
         # 创建文件夹
-        if not os.path.exists(self.__path_name):
-            os.mkdir(self.__path_name)
-        else:
-            print(f'{self.__path_name} exists!')
+        self.make_download_dir(self.__path_name)
 
         # 多线程下载
         self.download_all_by_urls(self.__all_urls, self.__path_name)
@@ -255,7 +256,7 @@ class Scraper:
         print(f'total: {len(self.__all_urls)}')
 
     def run_without_download(self):
-        '''获取所有url
+        '''获取所有url但不下载
         '''
 
         if self.__pic_max <= 20:
@@ -265,11 +266,16 @@ class Scraper:
             self.create_all_urls(url=self.__main_page,
                                  tag=self.__tag)
 
-        # 创建文件夹
-        if not os.path.exists(self.__path_name):
-            os.mkdir(self.__path_name)
+
+    def make_download_dir(self, path_name):
+        '''创建下载图片的文件夹
+        :param path: 文件夹名字
+        '''
+
+        if not os.path.exists(path_name):
+            os.mkdir(path_name)
         else:
-            print(f'{self.__path_name} exists!')
+            print(f'{path_name} exists!')
 
 
 if __name__ == '__main__':
