@@ -3,7 +3,6 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.Qt import QThread, pyqtSignal, QMessageBox
 import Scraper.HuabanScraper as HuabanScraper
 import time
-from math import ceil
 import concurrent.futures
 import webbrowser
 
@@ -56,10 +55,13 @@ class ThreadDownload(QThread):
         start_time = time.time()
         with concurrent.futures.ThreadPoolExecutor() as executor:
             for index, single_url in enumerate(scraper.get_all_urls()):
-                executor.submit(self.download, scraper, single_url, index, scraper.get_all_urls()[single_url])
+                executor.submit(self.download, 
+                                    scraper, 
+                                    single_url, 
+                                    index, scraper.get_all_urls()[single_url]['img_type'])
         # 计时，结束时间
         end_time = time.time()
-        consume_time = ceil(end_time - start_time)
+        consume_time = int(end_time - start_time)
         # consume_time_msg = f"{'-' * 40}下载耗时：{consume_time} 秒{'-' * 40}"
 
         # 发送信号：下载耗时

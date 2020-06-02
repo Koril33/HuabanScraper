@@ -37,7 +37,10 @@ class DownloadPic:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             for index, image_url in enumerate(img_urls):
                 executor.submit(self.download_image,
-                                image_url, path_name, index, img_urls[image_url])
+                                    image_url, 
+                                    path_name, 
+                                    index, 
+                                    img_urls[image_url]['img_type'])
 
         print(f'It spends {time.time() - start_time} seconds')
 

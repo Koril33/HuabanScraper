@@ -13,7 +13,7 @@ import Utils.DownloadUtil as DownloadUtil
 import Utils.MakeDir as MakeDir
 
 class Scraper:
-    def __init__(self, main_page, pic_max, path_name):
+    def __init__(self, main_page, pic_max, path_name, type_filter=('jpg', 'png', 'gif')):
         self.__main_page = main_page
         self.__pic_max = int(pic_max)
         self.__path_name = path_name
@@ -27,8 +27,7 @@ class Scraper:
         # 所有图片的下载地址和图片类型
         self.__all_urls = {}
         # 判断是画板还是发现的标志
-        self.__tag = self.create_tag(
-            self.__main_page)
+        self.__tag = self.create_tag(self.__main_page)
         # 已经下载的图片数量，用来显示进度条
         self.__download_count = 0
         # 指定下载数量是否超出图片总数
@@ -36,6 +35,9 @@ class Scraper:
 
         # 下载的对象
         self.download = DownloadUtil.DownloadPic()
+
+        # 过滤的类型
+        self.__type_filter = type_filter
 
         # 构造请求头
         self.__my_header = {
@@ -105,7 +107,7 @@ class Scraper:
             return pins
         elif tag == 'pins':
             self.__all_urls[self.__pic_url_l
-                                   + json_data['pin']['file']['key']] = json_data['pin']['file']['type']
+                                   + json_data['pin']['file']['key']] = {'img_type' : json_data['pin']['file']['type']}
             return 'single_pic'
         else:
             return
@@ -138,8 +140,10 @@ class Scraper:
 
         for i in range(len(first_page_pins)):
             # 获取图片真实下载地址，并添加到all_urls中
-            url = self.__pic_url_l + first_page_pins[i]['file']['key']
-            self.__all_urls[url] = first_page_pins[i]['file']['type']
+            img_type = self.download.create_download_type(first_page_pins[i]['file']['type'])
+            if img_type in self.__type_filter:
+                url = self.__pic_url_l + first_page_pins[i]['file']['key']
+                self.__all_urls[url] = {'img_type' : first_page_pins[i]['file']['type']}
 
             # 如果超过用户指定的max值，则结束
             if len(self.__all_urls) >= self.__pic_max:
@@ -159,9 +163,9 @@ class Scraper:
         # 当页面超过一页时，先下载第一页，并获得第一页最后的id值
         first_page_next_url_id = self.create_first_page_urls(url, tag)
 
-        if len(self.__all_urls) < 20:
-            self.__overtax = True
-            return
+        # if len(self.__all_urls) < 20:
+        #     self.__overtax = True
+        #     return
 
         if first_page_next_url_id is None:
             pass
@@ -190,11 +194,14 @@ class Scraper:
 
             for i in range(len(pins)):
                 # 获取图片真实下载地址，并添加到all_urls中
-                url = self.__pic_url_l + pins[i]['file']['key']
-                self.__all_urls[url] = pins[i]['file']['type']
+                img_type = self.download.create_download_type(pins[i]['file']['type'])
+                if  img_type in self.__type_filter:
+                    url = self.__pic_url_l + pins[i]['file']['key']
+                    self.__all_urls[url] = {'img_type' : pins[i]['file']['type']}
 
                 # 如果超过用户指定的max值，则结束
                 if len(self.__all_urls) >= self.__pic_max:
+                    print('len: ', len(self.__all_urls))
                     return
 
             # 如果用户给的max值超过当前页面的图片数量，会抛出IndexError
@@ -268,7 +275,7 @@ if __name__ == '__main__':
 
     scraper_list = []
     download_num = 30
-
+    type_filter = ('png', )
     for i in range(len(urls_test)):
         scraper = Scraper(urls_test[i], download_num, f'测试{i}')
         scraper_list.append(scraper)
@@ -276,6 +283,6 @@ if __name__ == '__main__':
     for scraper in scraper_list:
         scraper.run_and_download()
         # scraper.run_without_download()
-        # for index, image_url in enumerate(scraper.get_all_urls()):
-        #     print(f'index:{index}, url:{image_url}, type:{scraper.get_all_urls()[image_url]}')
+        # for index, img_url in enumerate(scraper.get_all_urls()):
+        #     print(f'index:{index}, url:{img_url}, type:{scraper.get_all_urls()[img_url]["img_type"]}')
     
