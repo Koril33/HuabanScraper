@@ -15,11 +15,12 @@ class ThreadDownload(QThread):
     download_finish_signal = pyqtSignal(bool)
     donwload_count_signal = pyqtSignal(int)
 
-    def __init__(self, url, pic_max, path_name):
+    def __init__(self, url, pic_max, path_name, type_filter):
         super().__init__()
         self.url = url
         self.pic_max = pic_max
         self.path_name = path_name
+        self.type_filter = type_filter
         # self.overtax = False
 
     def download(self, scraper, single_url, index, raw_type):
@@ -43,7 +44,7 @@ class ThreadDownload(QThread):
         '''
 
         scraper = HuabanScraper.Scraper(
-            self.url, self.pic_max, self.path_name)
+            self.url, self.pic_max, self.path_name, self.type_filter)
 
         # 将所有图片下载路径存入scraper对象的all_urls中
         scraper.run_without_download()
@@ -121,13 +122,37 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         '''与开始按钮绑定的事件
         '''
 
+        # 获取url
         url = self.lineEdit_url.text()
+        # 获取下载路径
         path_name = self.lineEdit_path.text()
+        # 获取下载数量
         self.pic_max = self.spinBox.text()
+        # 获取下载类型（all，jpg，png，gif）
+        all_flag = self.radioButton_all.isChecked()
+        jpg_flag = self.checkBox_jpg.isChecked()
+        png_flag = self.checkBox_png.isChecked()
+        gif_flag = self.checkBox_gif.isChecked()
+
+        if all_flag == True or (jpg_flag and png_flag and gif_flag):
+            type_filter = ('jpg', 'png', 'gif')
+        elif jpg_flag and not png_flag and not gif_flag:
+            type_filter = ('jpg', )
+        elif not jpg_flag and png_flag and not gif_flag:
+            type_filter = ('png', )
+        elif not jpg_flag and not png_flag and gif_flag:
+            type_filter = ('gif', )
+        elif jpg_flag and png_flag and not gif_flag:
+            type_filter = ('jpg', 'png')
+        elif jpg_flag and not png_flag and gif_flag:
+            type_filter = ('jpg', 'gif')
+        elif not jpg_flag and png_flag and gif_flag:
+            type_filter = ('png', 'gif')
+        
 
         if self.check_input(url, path_name):
             self.set_btn_off()
-            self.thread_download = ThreadDownload(url, self.pic_max, path_name)
+            self.thread_download = ThreadDownload(url, self.pic_max, path_name, type_filter)
             self.thread_download.download_proess_signal.connect(
                 self.set_progressbar_value)
             self.thread_download.download_message_signal.connect(

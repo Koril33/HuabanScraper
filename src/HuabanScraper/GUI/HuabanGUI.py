@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(841, 445)
+        MainWindow.resize(842, 519)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Button1 = QtWidgets.QPushButton(self.centralwidget)
@@ -47,7 +47,7 @@ class Ui_MainWindow(object):
         self.progressBar.setProperty("value", 0)
         self.progressBar.setObjectName("progressBar")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(20, 200, 801, 191))
+        self.textBrowser.setGeometry(QtCore.QRect(20, 270, 801, 191))
         self.textBrowser.setObjectName("textBrowser")
         self.Button3 = QtWidgets.QPushButton(self.centralwidget)
         self.Button3.setGeometry(QtCore.QRect(510, 50, 93, 21))
@@ -55,9 +55,25 @@ class Ui_MainWindow(object):
         self.Button4 = QtWidgets.QPushButton(self.centralwidget)
         self.Button4.setGeometry(QtCore.QRect(640, 50, 151, 51))
         self.Button4.setObjectName("Button4")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(20, 200, 72, 41))
+        self.label_4.setObjectName("label_4")
+        self.radioButton_all = QtWidgets.QRadioButton(self.centralwidget)
+        self.radioButton_all.setGeometry(QtCore.QRect(110, 210, 115, 19))
+        self.radioButton_all.setChecked(False)
+        self.radioButton_all.setObjectName("radioButton_all")
+        self.checkBox_jpg = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox_jpg.setGeometry(QtCore.QRect(220, 210, 91, 19))
+        self.checkBox_jpg.setObjectName("checkBox_jpg")
+        self.checkBox_png = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox_png.setGeometry(QtCore.QRect(330, 210, 91, 19))
+        self.checkBox_png.setObjectName("checkBox_png")
+        self.checkBox_gif = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox_gif.setGeometry(QtCore.QRect(440, 210, 91, 19))
+        self.checkBox_gif.setObjectName("checkBox_gif")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 841, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 842, 23))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
@@ -71,7 +87,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menu.menuAction())
 
         self.retranslateUi(MainWindow)
-
+        
         self.setWindowOpacity(0.9) # 设置窗口透明度
         
         # self.setWindowFlag(QtCore.Qt.FramelessWindowHint) # 隐藏边框
@@ -89,7 +105,7 @@ class Ui_MainWindow(object):
 
         # 打开花瓣网
         self.Button4.clicked.connect(self.open_huaban_web)
-
+        
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -102,15 +118,10 @@ class Ui_MainWindow(object):
         self.Button2.setText(_translate("MainWindow", "浏览"))
         self.Button3.setText(_translate("MainWindow", "粘贴链接"))
         self.Button4.setText(_translate("MainWindow", "花瓣官网"))
+        self.label_4.setText(_translate("MainWindow", "下载类型"))
+        self.radioButton_all.setText(_translate("MainWindow", "All"))
+        self.checkBox_jpg.setText(_translate("MainWindow", "JPG"))
+        self.checkBox_png.setText(_translate("MainWindow", "PNG"))
+        self.checkBox_gif.setText(_translate("MainWindow", "GIF"))
         self.menu.setTitle(_translate("MainWindow", "About"))
         self.actionauthor.setText(_translate("MainWindow", "author"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
