@@ -23,14 +23,14 @@ class ThreadDownload(QThread):
         self.path_name = path_name
         # self.overtax = False
 
-    def download(self, scraper, single_url, index):
+    def download(self, scraper, single_url, index, raw_type):
         '''下载单个图片
         :param scraper: Scraper对象
         :param single_url: 单个图片的url
         :param index: 图片保存代号
         '''
 
-        scraper.download.download_image(single_url, self.path_name, index)
+        scraper.download.download_image(single_url, self.path_name, index, raw_type)
         process = int(scraper.download.get_download_count() / int(self.pic_max) * 100)
         msg = f'{single_url} 下载成功！'
 
@@ -56,7 +56,7 @@ class ThreadDownload(QThread):
         start_time = time.time()
         with concurrent.futures.ThreadPoolExecutor() as executor:
             for index, single_url in enumerate(scraper.get_all_urls()):
-                executor.submit(self.download, scraper, single_url, index)
+                executor.submit(self.download, scraper, single_url, index, scraper.get_all_urls()[single_url])
         # 计时，结束时间
         end_time = time.time()
         consume_time = ceil(end_time - start_time)

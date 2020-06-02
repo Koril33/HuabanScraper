@@ -24,8 +24,8 @@ class Scraper:
         self.__page_url_l = self.create_url_l(self.__main_page)
         # 页面url右半部分
         self.__page_url_r = '&limit=20&wfl=1'
-        # 所有图片的下载地址
-        self.__all_urls = []
+        # 所有图片的下载地址和图片类型
+        self.__all_urls = {}
         # 判断是画板还是发现的标志
         self.__tag = self.create_tag(
             self.__main_page)
@@ -104,8 +104,8 @@ class Scraper:
             pins = json_data['pins']
             return pins
         elif tag == 'pins':
-            self.__all_urls.append(self.__pic_url_l
-                                   + json_data['pin']['file']['key'])
+            self.__all_urls[self.__pic_url_l
+                                   + json_data['pin']['file']['key']] = json_data['pin']['file']['type']
             return 'single_pic'
         else:
             return
@@ -139,7 +139,7 @@ class Scraper:
         for i in range(len(first_page_pins)):
             # 获取图片真实下载地址，并添加到all_urls中
             url = self.__pic_url_l + first_page_pins[i]['file']['key']
-            self.__all_urls.append(url)
+            self.__all_urls[url] = first_page_pins[i]['file']['type']
 
             # 如果超过用户指定的max值，则结束
             if len(self.__all_urls) >= self.__pic_max:
@@ -191,7 +191,7 @@ class Scraper:
             for i in range(len(pins)):
                 # 获取图片真实下载地址，并添加到all_urls中
                 url = self.__pic_url_l + pins[i]['file']['key']
-                self.__all_urls.append(url)
+                self.__all_urls[url] = pins[i]['file']['type']
 
                 # 如果超过用户指定的max值，则结束
                 if len(self.__all_urls) >= self.__pic_max:
@@ -275,5 +275,7 @@ if __name__ == '__main__':
 
     for scraper in scraper_list:
         scraper.run_and_download()
-
+        # scraper.run_without_download()
+        # for index, image_url in enumerate(scraper.get_all_urls()):
+        #     print(f'index:{index}, url:{image_url}, type:{scraper.get_all_urls()[image_url]}')
     
