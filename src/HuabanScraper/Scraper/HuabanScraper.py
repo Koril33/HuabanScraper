@@ -84,6 +84,32 @@ class Scraper:
             print('url has mistake!')
             return 'error'
 
+    def create_pins(self, json_data, tag):
+        """通过tag来获取json的数据
+        :param json_data: get得到的json
+        :param tag: 页面标签
+        :return: pins的字典
+        """
+
+        if tag == 'discovery':
+            pins = json_data['pins']
+            return pins
+        elif tag == 'boards':
+            pins = json_data['board']['pins']
+            return pins
+        elif tag == 'explore':
+            pins = json_data['pins']
+            return pins
+        elif tag == 'favorite':
+            pins = json_data['pins']
+            return pins
+        elif tag == 'pins':
+            self.__all_urls.append(self.__pic_url_l
+                                   + json_data['pin']['file']['key'])
+            return 'single_pic'
+        else:
+            return
+
     def create_first_page_urls(self, url, tag):
         """下载时，第一页和其它页分开
         此函数获取第一页图片的下载地址
@@ -101,20 +127,15 @@ class Scraper:
         first_page_json_result = first_page_response.json()
 
         # 画板和发现的json格式不一样，需要分开处理
-        if tag == 'discovery':
-            first_page_pins = first_page_json_result['pins']
-        elif tag == 'boards':
-            first_page_pins = first_page_json_result['board']['pins']
-        elif tag == 'explore':
-            first_page_pins = first_page_json_result['pins']
-        elif tag == 'favorite':
-            first_page_pins = first_page_json_result['pins']
-        elif tag == 'pins':
-            self.__all_urls.append(self.__pic_url_l
-                                   + first_page_json_result['pin']['file']['key'])
-            return 'single_pic'
-        else:
+        first_page_pins = self.create_pins(first_page_json_result, tag)
+
+        if first_page_pins == 'single_pic':
+            print('下载单张pin图')
             return
+        elif first_page_pins is None:
+            print('不支持此tag')
+            return
+
         for i in range(len(first_page_pins)):
             # 获取图片真实下载地址，并添加到all_urls中
             url = self.__pic_url_l + first_page_pins[i]['file']['key']
@@ -158,20 +179,15 @@ class Scraper:
             json_result = response.json()
 
             # 画板和发现的json格式不一样，需要分开处理
-            if tag == 'discovery':
-                pins = json_result['pins']
-            elif tag == 'boards':
-                pins = json_result['board']['pins']
-            elif tag == 'explore':
-                pins = json_result['pins']
-            elif tag == 'favorite':
-                pins = json_result['pins']
-            elif tag == 'pins':
-                self.__all_urls.append(self.__pic_url_l
-                                       + json_result['pin']['file']['key'])
+            pins = self.create_pins(json_result, tag)
+            
+            if pins == 'single_pic':
+                print('下载单张pin图')
                 return
-            else:
+            elif pins is None:
+                print('不支持此tag')
                 return
+
             for i in range(len(pins)):
                 # 获取图片真实下载地址，并添加到all_urls中
                 url = self.__pic_url_l + pins[i]['file']['key']
@@ -244,9 +260,9 @@ class Scraper:
 
 if __name__ == '__main__':
     urls_test = [
-        # 'https://huaban.com/discovery/geek/',
-        # 'https://huaban.com/boards/43427316/',
-        # 'https://huaban.com/pins/3083753516/',
+        'https://huaban.com/discovery/geek/',
+        'https://huaban.com/boards/43427316/',
+        'https://huaban.com/pins/3083753516/',
         'https://huaban.com/favorite/beauty/',
     ]
 
@@ -258,6 +274,6 @@ if __name__ == '__main__':
         scraper_list.append(scraper)
 
     for scraper in scraper_list:
-        scraper.run_without_download()
+        scraper.run_and_download()
 
-    print(scraper.get_all_urls())
+    
