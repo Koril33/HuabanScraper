@@ -238,7 +238,7 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         '''作者信息
         '''
 
-        QMessageBox.about(self, '关于', '版本号：v1.1.0\n'
+        QMessageBox.about(self, '关于', '版本号：v1.2.0\n'
                                         '--------------------------------------------------------------\n'
                                         '作者：Koril\n'
                                         '--------------------------------------------------------------\n'
