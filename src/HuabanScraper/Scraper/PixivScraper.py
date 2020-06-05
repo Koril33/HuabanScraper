@@ -8,16 +8,16 @@ api = AppPixivAPI()
 api.login("dingjinghui33@163.com", "159756")   # Not required
 
 img_list = []
-json_result = api.user_illusts(1443093)
+json_result = api.user_illusts(843975)
 print(json_result)
 pins = json_result['illusts']
 print('length: ', len(pins))
 for pin in pins:
-    # img_url = pin['image_urls']['large']
-    # print(img_url)
-    # img_list.append(img_url)
-    img_id = pin['id']
-    print(img_id)
+    img_url = pin['image_urls']['large']
+    print(img_url)
+    img_list.append(img_url)
+    # img_id = pin['id']
+    # print(img_id)
 
 my_header = {
     'Host': 'www.pixiv.net',
@@ -77,13 +77,14 @@ def main():
             # img_url = img['src']
             s = re.search('img/.*_p0', img).group(0)
             # result = 'https://i.pximg.net/img-original/' + s + '.' + img_url.rsplit('.', maxsplit = 1)[-1]
-            result = 'https://i.pximg.net/img-original/' + s + '.' + 'png'
+            result = 'https://i.pximg.net/img-original/' + s + '.' + 'jpg'
             print(f'url: {result} index: {index}')
         
             download_image(result, '测试', str(index))
         except Exception as e:
             print(e)
 
-
+if __name__ == '__main__':
+    main()
 
 
