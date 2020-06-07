@@ -1,0 +1,23 @@
+#pushButton, #pushButton_2, #pushButton_3 { 
+    background:#F76677;
+    border-radius:5px
+}
+
+#pushButton:hover {
+    background:red;
+}
+
+#pushButton_2:hover {
+    background:red;
+}
+
+#pushButton_3:hover {
+    background:red;
+}
+
+QLineEdit {
+    border:1px solid gray;
+    width:300px;
+    border-radius:10px;
+    padding:2px 4px;
+}

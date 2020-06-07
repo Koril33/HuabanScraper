@@ -139,6 +139,11 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def ShowDialog(self):
         # 创建子窗口实例
         self.dialog = ChildWindow()
+
+        styleFile = './style/multi.qss'
+        qssStyle = CommonHelper.readQss(styleFile)
+        self.dialog.setStyleSheet(qssStyle)
+        
         # 显示子窗口
         self.dialog.show()
         # 实现子窗口中的【确定】按钮功能
@@ -218,11 +223,25 @@ class ChildWindow(QtWidgets.QDialog, Ui_Dialog):
         self.lineEdit_url.clear()
         self.lineEdit_url.paste()
 
+class CommonHelper:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def readQss(style):
+        with open(style, 'r') as f:
+            return f.read()
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
     import sys
     app = QtWidgets.QApplication(sys.argv)
     window = MyWindow()
+
+    # 加载qss文件
+    styleFile = './style/multi.qss'
+    qssStyle = CommonHelper.readQss(styleFile)
+    window.setStyleSheet(qssStyle)
+
     window.show()
     sys.exit(app.exec_())
