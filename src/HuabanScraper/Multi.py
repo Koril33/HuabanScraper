@@ -17,6 +17,7 @@ class ThreadDownload(QThread):
     # download_time_signal = pyqtSignal(int)
     # # download_overtax_signal = pyqtSignal(bool)
     download_finish_signal = pyqtSignal(bool)
+    download_single_task_finish_signal = pyqtSignal(int)
     # donwload_count_signal = pyqtSignal(int)
 
     def __init__(self, urls, pic_maxs, path_names, pic_filters):
@@ -48,7 +49,7 @@ class ThreadDownload(QThread):
         # p.join()
         for i in range(len(self.urls)):
             self.download_all(i, self.urls[i], self.pic_maxs[i], self.path_names[i], self.pic_filters[i])
-        
+            self.download_single_task_finish_signal.emit(i)
         self.download_finish_signal.emit(True)
 
 class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -60,6 +61,7 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.path_names = []
         self.pic_filters = []
 
+        self.history = []
     #insert,只是简单插入一个固定数据
     def table_insert(self, url, path_name, pic_max, pic_filter):
         row = self.table.rowCount()
@@ -185,7 +187,13 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.set_btn_off()
         self.thread_download = ThreadDownload(self.urls, self.pic_maxs, self.path_names, self.pic_filters)
         self.thread_download.download_finish_signal.connect(self.download_finish)
+        self.thread_download.download_single_task_finish_signal.connect(self.download_single_task_finish)
         self.thread_download.start()
+
+    def download_single_task_finish(self, row):
+        self.history.append(self.table.item(0,0).text())
+        self.table.removeRow(0)
+        print(self.history)
 
     def download_finish(self):
         self.set_btn_on()
