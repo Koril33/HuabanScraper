@@ -1,17 +1,29 @@
-#pushButton, #pushButton_2, #pushButton_3 { 
+#button_new_task, #button_delete, #button_download, #button_select_path, #button_add, #button_paste { 
     background:#F76677;
     border-radius:5px
 }
 
-#pushButton:hover {
+#button_new_task:hover {
     background:red;
 }
 
-#pushButton_2:hover {
+#button_delete:hover {
     background:red;
 }
 
-#pushButton_3:hover {
+#button_download:hover {
+    background:red;
+}
+
+#button_select_path:hover {
+    background:red;
+}
+
+#button_add:hover {
+    background:red;
+}
+
+#button_paste:hover {
     background:red;
 }
 
