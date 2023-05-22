@@ -8,5 +8,5 @@ PyInstaller==3.6
 PyQt5==5.14.2
 PyQt5-sip==12.7.2
 pywin32-ctypes==0.2.0
-requests==2.23.0
+requests==2.31.0
 urllib3==1.26.5
